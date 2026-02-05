@@ -19,7 +19,8 @@ export function GuestRoute({ children }: GuestRouteProps) {
 
   if (isAuthenticated) {
     // If user is logged in, redirect to where they came from or dashboard
-    const from = (location.state as { from?: Location })?.from?.pathname || "/"
+    const from =
+      (location.state as { from?: Location })?.from?.pathname || "/dashboard"
     return <Navigate to={from} replace />
   }
 

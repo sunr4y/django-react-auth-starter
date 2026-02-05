@@ -27,7 +27,7 @@ export function LoginPage() {
       {
         onSuccess: () => {
           toast.success("Welcome back!")
-          navigate("/") // TODO: Navigate to dashboard when ready
+          navigate("/dashboard")
         },
         onError: (err) => {
           const apiError = err.response?.data

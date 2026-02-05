@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom"
 import {
+  DashboardPage,
   LandingPage,
   SignupPage,
   LoginPage,
@@ -7,7 +8,7 @@ import {
   ResetPasswordPage,
   ActivatePage,
 } from "@/pages"
-import { GuestRoute } from "@/components/auth"
+import { GuestRoute, ProtectedRoute } from "@/components/auth"
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/activate/:uid/:token" element={<ActivatePage />} />
 
-      {/* Guest-only routes (redirect to / if logged in) */}
+      {/* Guest-only routes (redirect to /dashboard if logged in) */}
       <Route
         path="/signup"
         element={
@@ -50,7 +51,7 @@ function App() {
         }
       />
 
-      {/* Protected routes example:
+      {/* Protected routes (redirect to /login if not logged in) */}
       <Route
         path="/dashboard"
         element={
@@ -59,7 +60,6 @@ function App() {
           </ProtectedRoute>
         }
       />
-      */}
     </Routes>
   )
 }
