@@ -8,7 +8,7 @@ from djoser.serializers import (
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from rest_framework import serializers
 
-from .models import APIKey, User
+from .models import User
 
 
 class UserCreateSerializer(BaseUserCreateSerializer):
@@ -88,32 +88,3 @@ class UserSerializer(BaseUserSerializer):
             "agreed_at",
             "date_joined",
         )
-
-
-class APIKeySerializer(serializers.ModelSerializer):
-    """Serializer for API keys (without exposing full key)."""
-
-    class Meta:
-        """Meta options."""
-
-        model = APIKey
-        fields = ("id", "name", "prefix", "is_active", "last_used_at", "created_at")
-        read_only_fields = ("id", "prefix", "last_used_at", "created_at")
-
-
-class APIKeyCreateSerializer(serializers.ModelSerializer):
-    """Serializer for creating API keys (returns full key once)."""
-
-    key = serializers.CharField(read_only=True)
-
-    class Meta:
-        """Meta options."""
-
-        model = APIKey
-        fields = ("id", "name", "key", "prefix", "created_at")
-        read_only_fields = ("id", "key", "prefix", "created_at")
-
-    def create(self, validated_data: dict[str, Any]) -> APIKey:
-        """Create API key with user from context."""
-        validated_data["user"] = self.context["request"].user
-        return super().create(validated_data)

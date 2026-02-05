@@ -192,7 +192,6 @@ SPECTACULAR_SETTINGS = {
     },
     "SECURITY": [
         {"jwtAuth": []},
-        {"apiKeyAuth": []},
     ],
     "APPEND_COMPONENTS": {
         "securitySchemes": {
@@ -200,11 +199,6 @@ SPECTACULAR_SETTINGS = {
                 "type": "http",
                 "scheme": "bearer",
                 "bearerFormat": "JWT",
-            },
-            "apiKeyAuth": {
-                "type": "apiKey",
-                "in": "header",
-                "name": "X-API-Key",
             },
         }
     },

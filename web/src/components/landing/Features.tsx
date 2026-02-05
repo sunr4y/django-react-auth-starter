@@ -1,65 +1,57 @@
 import { motion } from "framer-motion"
 import {
-  PdfIcon,
-  ScreenshotIcon,
-  OgImageIcon,
-  SpeedIcon,
-  SecurityIcon,
-  DeveloperIcon,
-} from "@/components/illustrations/feature-icons"
+  KeyRound,
+  Mail,
+  RefreshCw,
+  UserCircle,
+  Shield,
+} from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 
 const features = [
   {
-    icon: PdfIcon,
-    title: "PDF Generation",
+    icon: KeyRound,
+    title: "JWT Authentication",
     description:
-      "Convert HTML or URLs to pixel-perfect PDFs. Full CSS3, custom fonts, and JavaScript support.",
+      "Secure token-based authentication with automatic refresh rotation and token blacklisting on logout.",
     accent: "coral",
   },
   {
-    icon: ScreenshotIcon,
-    title: "Screenshots",
+    icon: Mail,
+    title: "Email Verification",
     description:
-      "Capture full-page or viewport screenshots in PNG, JPEG, or WebP format.",
+      "Built-in email verification flow with customizable templates and secure token-based activation.",
     accent: "yellow",
   },
   {
-    icon: OgImageIcon,
-    title: "OG Images",
+    icon: RefreshCw,
+    title: "Password Reset",
     description:
-      "Auto-generate Open Graph images for social sharing. Perfect for blogs and marketing.",
+      "Secure password reset flow with time-limited tokens and email confirmation.",
     accent: "blue",
   },
   {
-    icon: SpeedIcon,
-    title: "Fast Rendering",
+    icon: UserCircle,
+    title: "User Profiles",
     description:
-      "Average conversion under 2 seconds. Optimized Chromium engine for speed.",
+      "Complete user management with custom fields, profile updates, and account settings.",
     accent: "green",
   },
   {
-    icon: SecurityIcon,
-    title: "Secure by Default",
+    icon: Shield,
+    title: "Security First",
     description:
-      "No data storage. TLS encryption. GDPR and HIPAA compliance ready.",
-    accent: "green",
-  },
-  {
-    icon: DeveloperIcon,
-    title: "Developer-First",
-    description:
-      "Simple REST API. SDKs for all major languages. Sandbox mode for testing.",
+      "Rate limiting, Argon2 hashing, CORS configuration, security headers, and OWASP best practices.",
     accent: "coral",
   },
 ]
 
 const stats = [
-  { value: "99.9%", label: "Uptime SLA" },
-  { value: "<2s", label: "Avg Response" },
-  { value: "50+", label: "API Endpoints" },
-  { value: "24/7", label: "Support" },
+  { value: "45+", label: "Tests" },
+  { value: "100%", label: "TypeScript" },
+  { value: "< 5 min", label: "Setup Time" },
+  { value: "MIT", label: "License" },
 ]
 
 export function Features() {
@@ -78,10 +70,11 @@ export function Features() {
             Features
           </Badge>
           <h2 className="text-4xl font-bold tracking-tight mb-4">
-            Everything you need
+            Everything you need for auth
           </h2>
           <p className="text-lg text-text-secondary max-w-[520px] mx-auto">
-            Powerful features to handle all your document generation needs
+            Production-ready authentication features so you can focus on
+            building your product
           </p>
         </motion.div>
 
@@ -117,8 +110,18 @@ export function Features() {
               {/* Content */}
               <CardContent className="relative z-10 p-6">
                 {/* Icon */}
-                <div className="w-16 h-16 mb-5">
-                  <feature.icon className="w-full h-full" />
+                <div
+                  className={`w-12 h-12 mb-5 rounded-xl flex items-center justify-center ${
+                    feature.accent === "coral"
+                      ? "bg-coral/10 text-coral"
+                      : feature.accent === "green"
+                        ? "bg-green/10 text-green"
+                        : feature.accent === "yellow"
+                          ? "bg-yellow/10 text-yellow-600"
+                          : "bg-blue-500/10 text-blue-500"
+                  }`}
+                >
+                  <feature.icon className="w-6 h-6" />
                 </div>
 
                 {/* Text */}

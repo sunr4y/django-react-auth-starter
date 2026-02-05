@@ -1,4 +1,4 @@
-import { Menu, X } from "lucide-react"
+import { Menu, X, Github } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
@@ -13,10 +13,12 @@ export function Navbar() {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-0 text-2xl font-bold tracking-tight"
+            className="flex items-center gap-2 text-2xl font-bold tracking-tight"
           >
-            <img src="/logo.png" alt="P" className="h-10 w-auto" />
-            <span>dflet</span>
+            <div className="w-8 h-8 bg-coral rounded-lg flex items-center justify-center">
+              <span className="text-white text-lg font-bold">A</span>
+            </div>
+            <span>AuthKit</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -25,10 +27,17 @@ export function Navbar() {
               <a href="#features">Features</a>
             </Button>
             <Button variant="ghost" asChild>
-              <a href="#pricing">Pricing</a>
+              <a href="#how-it-works">How it Works</a>
             </Button>
             <Button variant="ghost" asChild>
-              <a href="#docs">Documentation</a>
+              <a
+                href="https://github.com/maniishbhusal/django-react-auth-starter"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="w-4 h-4 mr-2" />
+                GitHub
+              </a>
             </Button>
           </div>
 
@@ -65,10 +74,17 @@ export function Navbar() {
                 <a href="#features">Features</a>
               </Button>
               <Button variant="ghost" asChild className="justify-start">
-                <a href="#pricing">Pricing</a>
+                <a href="#how-it-works">How it Works</a>
               </Button>
               <Button variant="ghost" asChild className="justify-start">
-                <a href="#docs">Documentation</a>
+                <a
+                  href="https://github.com/maniishbhusal/django-react-auth-starter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="w-4 h-4 mr-2" />
+                  GitHub
+                </a>
               </Button>
               <div className="flex flex-col gap-3 pt-4 border-t border-border-light">
                 <Button variant="outline" asChild className="w-full">

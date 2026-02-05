@@ -3,7 +3,7 @@
 import pytest
 from rest_framework.test import APIClient
 
-from accounts.models import APIKey, User
+from accounts.models import User
 
 
 @pytest.fixture
@@ -59,9 +59,3 @@ def authenticated_client(api_client: APIClient, user: User) -> APIClient:
     """Return an authenticated API client."""
     api_client.force_authenticate(user=user)
     return api_client
-
-
-@pytest.fixture
-def api_key(user: User) -> APIKey:
-    """Create and return an API key for the test user."""
-    return APIKey.objects.create(user=user, name="Test Key")
