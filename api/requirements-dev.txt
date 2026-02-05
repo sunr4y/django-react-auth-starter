@@ -1,0 +1,17 @@
+# Install base requirements
+-r requirements.txt
+
+# Testing
+pytest>=8.0
+pytest-django>=4.8
+pytest-mock>=3.14
+Faker>=33.0
+
+# Linting & Formatting
+black>=24.0
+ruff>=0.4
+
+# Type checking
+mypy>=1.10
+django-stubs>=5.0
+djangorestframework-stubs>=3.14

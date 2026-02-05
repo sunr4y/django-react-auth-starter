@@ -7,19 +7,59 @@ import {
   ResetPasswordPage,
   ActivatePage,
 } from "@/pages"
+import { GuestRoute } from "@/components/auth"
 
 function App() {
   return (
     <Routes>
+      {/* Public routes */}
       <Route path="/" element={<LandingPage />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/activate/:uid/:token" element={<ActivatePage />} />
+
+      {/* Guest-only routes (redirect to / if logged in) */}
+      <Route
+        path="/signup"
+        element={
+          <GuestRoute>
+            <SignupPage />
+          </GuestRoute>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <GuestRoute>
+            <LoginPage />
+          </GuestRoute>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <GuestRoute>
+            <ForgotPasswordPage />
+          </GuestRoute>
+        }
+      />
       <Route
         path="/password-reset/:uid/:token"
-        element={<ResetPasswordPage />}
+        element={
+          <GuestRoute>
+            <ResetPasswordPage />
+          </GuestRoute>
+        }
       />
-      <Route path="/activate/:uid/:token" element={<ActivatePage />} />
+
+      {/* Protected routes example:
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      */}
     </Routes>
   )
 }
