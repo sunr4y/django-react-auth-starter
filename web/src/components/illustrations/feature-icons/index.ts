@@ -1,0 +1,6 @@
+export { PdfIcon } from "./PdfIcon"
+export { ScreenshotIcon } from "./ScreenshotIcon"
+export { OgImageIcon } from "./OgImageIcon"
+export { SpeedIcon } from "./SpeedIcon"
+export { SecurityIcon } from "./SecurityIcon"
+export { DeveloperIcon } from "./DeveloperIcon"

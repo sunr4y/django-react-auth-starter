@@ -1,0 +1,5 @@
+export { SignupPage } from "./SignupPage"
+export { LoginPage } from "./LoginPage"
+export { ForgotPasswordPage } from "./ForgotPasswordPage"
+export { ResetPasswordPage } from "./ResetPasswordPage"
+export { ActivatePage } from "./ActivatePage"
