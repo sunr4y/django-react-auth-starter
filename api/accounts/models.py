@@ -10,27 +10,9 @@ from django.utils import timezone
 class User(AbstractUser):
     """Custom user model with email as the primary identifier."""
 
-    class ProgrammingLanguage(models.TextChoices):
-        """Supported programming languages for code samples."""
-
-        PYTHON = "python", "Python"
-        JAVASCRIPT = "javascript", "JavaScript"
-        TYPESCRIPT = "typescript", "TypeScript"
-        PHP = "php", "PHP"
-        RUBY = "ruby", "Ruby"
-        GO = "go", "Go"
-        JAVA = "java", "Java"
-        CSHARP = "csharp", "C#"
-        CURL = "curl", "cURL"
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     full_name = models.CharField(max_length=255, blank=True)
-    preferred_language = models.CharField(
-        max_length=20,
-        choices=ProgrammingLanguage.choices,
-        default=ProgrammingLanguage.PYTHON,
-    )
     agreed_to_terms = models.BooleanField(default=False)
     agreed_at = models.DateTimeField(null=True, blank=True)
 

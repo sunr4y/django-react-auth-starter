@@ -22,7 +22,6 @@ class TestGetCurrentUser:
         assert response.data["id"] == str(user.id)
         assert response.data["email"] == user.email
         assert response.data["full_name"] == user.full_name
-        assert response.data["preferred_language"] == user.preferred_language
         assert response.data["agreed_to_terms"] == user.agreed_to_terms
 
     def test_get_current_user_unauthenticated(self, api_client: APIClient):
@@ -57,31 +56,28 @@ class TestUpdateCurrentUser:
         user.refresh_from_db()
         assert user.full_name == "New Name"
 
-    def test_update_preferred_language(
+    def test_update_full_name_multiple_times(
         self, authenticated_client: APIClient, user: User
     ):
-        """Test updating preferred language."""
+        """Test updating full name multiple times."""
         response = authenticated_client.patch(
             self.url,
-            {"preferred_language": "javascript"},
+            {"full_name": "First Update"},
             format="json",
         )
         assert response.status_code == status.HTTP_200_OK
-        assert response.data["preferred_language"] == "javascript"
+        assert response.data["full_name"] == "First Update"
+
+        response = authenticated_client.patch(
+            self.url,
+            {"full_name": "Second Update"},
+            format="json",
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["full_name"] == "Second Update"
 
         user.refresh_from_db()
-        assert user.preferred_language == "javascript"
-
-    def test_update_multiple_fields(self, authenticated_client: APIClient, user: User):
-        """Test updating multiple fields at once."""
-        response = authenticated_client.patch(
-            self.url,
-            {"full_name": "Updated Name", "preferred_language": "go"},
-            format="json",
-        )
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data["full_name"] == "Updated Name"
-        assert response.data["preferred_language"] == "go"
+        assert user.full_name == "Second Update"
 
     def test_cannot_update_email(self, authenticated_client: APIClient, user: User):
         """Test email cannot be updated (read-only)."""
@@ -111,17 +107,6 @@ class TestUpdateCurrentUser:
 
         user.refresh_from_db()
         assert user.agreed_to_terms is True  # Still true
-
-    def test_update_with_invalid_language(
-        self, authenticated_client: APIClient, user: User
-    ):
-        """Test updating with invalid preferred language fails."""
-        response = authenticated_client.patch(
-            self.url,
-            {"preferred_language": "invalid_lang"},
-            format="json",
-        )
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_update_unauthenticated(self, api_client: APIClient):
         """Test updating fails when not authenticated."""

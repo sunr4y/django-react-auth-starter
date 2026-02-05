@@ -21,7 +21,6 @@ def user_data() -> dict:
         "password": "SecurePass123!",
         "re_password": "SecurePass123!",
         "full_name": "Test User",
-        "preferred_language": "python",
         "agreed_to_terms": True,
     }
 
@@ -34,7 +33,6 @@ def user(db) -> User:
         username="testuser",
         password="TestPass123!",
         full_name="Test User",
-        preferred_language="python",
         agreed_to_terms=True,
         is_active=True,
     )
@@ -48,7 +46,6 @@ def inactive_user(db) -> User:
         username="inactiveuser",
         password="TestPass123!",
         full_name="Inactive User",
-        preferred_language="python",
         agreed_to_terms=True,
         is_active=False,
     )

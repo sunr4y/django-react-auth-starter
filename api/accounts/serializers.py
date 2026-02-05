@@ -15,11 +15,6 @@ class UserCreateSerializer(BaseUserCreateSerializer):
     """Serializer for user registration with password confirmation."""
 
     full_name = serializers.CharField(required=True, allow_blank=False)
-    preferred_language = serializers.ChoiceField(
-        choices=User.ProgrammingLanguage.choices,
-        required=False,
-        default="python",
-    )
     agreed_to_terms = serializers.BooleanField(required=True)
 
     class Meta(BaseUserCreateSerializer.Meta):
@@ -28,7 +23,6 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         model = User
         fields = tuple(BaseUserCreateSerializer.Meta.fields) + (
             "full_name",
-            "preferred_language",
             "agreed_to_terms",
         )
 
@@ -50,7 +44,6 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         """Create user with extra fields."""
         # Extract our custom fields before calling parent
         full_name = validated_data.pop("full_name", "")
-        preferred_language = validated_data.pop("preferred_language", "python")
         agreed_to_terms = validated_data.pop("agreed_to_terms", False)
 
         # Create user using parent method
@@ -58,9 +51,8 @@ class UserCreateSerializer(BaseUserCreateSerializer):
 
         # Set extra fields
         user.full_name = full_name
-        user.preferred_language = preferred_language
         user.agreed_to_terms = agreed_to_terms
-        user.save(update_fields=["full_name", "preferred_language", "agreed_to_terms"])
+        user.save(update_fields=["full_name", "agreed_to_terms"])
 
         return user
 
@@ -76,7 +68,6 @@ class UserSerializer(BaseUserSerializer):
             "id",
             "email",
             "full_name",
-            "preferred_language",
             "agreed_to_terms",
             "agreed_at",
             "date_joined",

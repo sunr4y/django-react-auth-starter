@@ -17,13 +17,11 @@ class TestUserModel:
             username="testuser",
             password="TestPass123!",
             full_name="Test User",
-            preferred_language="python",
             agreed_to_terms=True,
         )
         assert user.email == "test@example.com"
         assert user.username == "testuser"
         assert user.full_name == "Test User"
-        assert user.preferred_language == "python"
         assert user.agreed_to_terms is True
         assert user.check_password("TestPass123!")
 
@@ -69,15 +67,6 @@ class TestUserModel:
         user.refresh_from_db()
         assert user.agreed_at == original_agreed_at
 
-    def test_default_preferred_language(self):
-        """Test default preferred language is Python."""
-        user = User.objects.create_user(
-            email="default@example.com",
-            username="defaultuser",
-            password="TestPass123!",
-        )
-        assert user.preferred_language == "python"
-
     def test_email_is_unique(self, user: User):
         """Test email must be unique."""
         from django.db import IntegrityError
@@ -88,25 +77,3 @@ class TestUserModel:
                 username="another",
                 password="TestPass123!",
             )
-
-    def test_programming_language_choices(self):
-        """Test all programming language choices are valid."""
-        valid_choices = [
-            "python",
-            "javascript",
-            "typescript",
-            "php",
-            "ruby",
-            "go",
-            "java",
-            "csharp",
-            "curl",
-        ]
-        for lang in valid_choices:
-            user = User.objects.create_user(
-                email=f"{lang}@example.com",
-                username=f"{lang}user",
-                password="TestPass123!",
-                preferred_language=lang,
-            )
-            assert user.preferred_language == lang
