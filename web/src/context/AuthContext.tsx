@@ -14,14 +14,14 @@ import {
   clearStoredTokens,
   type StoredTokens,
 } from "@/lib/api-client"
-import { getMe } from "@/lib/auth-api"
+import { getMe, logout as logoutApi } from "@/lib/auth-api"
 
 export interface AuthContextType {
   user: User | null
   isAuthenticated: boolean
   isLoading: boolean
   login: (tokens: StoredTokens, rememberMe?: boolean) => Promise<void>
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -76,7 +76,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     []
   )
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    // Try to blacklist the refresh token on the server
+    const tokens = getStoredTokens()
+    if (tokens?.refresh) {
+      try {
+        await logoutApi(tokens.refresh)
+      } catch {
+        // Ignore errors - we still want to clear local tokens
+      }
+    }
     clearStoredTokens()
     setUser(null)
     queryClient.clear()

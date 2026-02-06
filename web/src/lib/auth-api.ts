@@ -62,3 +62,7 @@ export async function getMe(): Promise<User> {
   const response = await apiClient.get<User>("/auth/users/me/")
   return response.data
 }
+
+export async function logout(refreshToken: string): Promise<void> {
+  await apiClient.post("/auth/logout/", { refresh: refreshToken })
+}
