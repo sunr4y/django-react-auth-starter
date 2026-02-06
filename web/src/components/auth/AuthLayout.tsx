@@ -38,8 +38,10 @@ export function AuthLayout({
             )}
           </div>
 
-          {/* Form Content */}
-          {children}
+          {/* Form Content - Card Container */}
+          <div className="bg-white border border-border-light rounded-2xl shadow-lg p-8">
+            {children}
+          </div>
         </motion.div>
       </main>
 
