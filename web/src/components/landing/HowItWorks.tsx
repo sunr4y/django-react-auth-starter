@@ -1,31 +1,30 @@
 import { motion } from "framer-motion"
-import {
-  SendCodeIllustration,
-  RenderIllustration,
-  OutputIllustration,
-} from "@/components/illustrations"
+import { Terminal, Settings, Rocket } from "lucide-react"
 
 const steps = [
   {
     number: 1,
-    title: "Send HTML or URL",
+    title: "Clone the Repository",
     description:
-      "Make a POST request with your HTML content or a public URL you want to convert.",
-    illustration: SendCodeIllustration,
+      "Get started with a single command. Works with npm, pnpm, or yarn. Full TypeScript support out of the box.",
+    icon: Terminal,
+    color: "coral",
   },
   {
     number: 2,
-    title: "We render it",
+    title: "Configure Your App",
     description:
-      "Our Chromium engine processes your content with full CSS, fonts, and JavaScript support.",
-    illustration: RenderIllustration,
+      "Set your environment variables, customize email templates, and add your branding. Everything is well-documented.",
+    icon: Settings,
+    color: "yellow",
   },
   {
     number: 3,
-    title: "Get your document",
+    title: "Deploy & Go Live",
     description:
-      "Receive your PDF, screenshot, or image instantly via direct download or CDN URL.",
-    illustration: OutputIllustration,
+      "Deploy to Railway, Render, Vercel, or any platform. Production-ready with security best practices built in.",
+    icon: Rocket,
+    color: "green",
   },
 ]
 
@@ -61,14 +60,14 @@ export function HowItWorks() {
           className="text-center mb-20"
         >
           <h2 className="text-4xl font-bold tracking-tight text-text-muted mb-4">
-            How it works
+            Get started in minutes
           </h2>
           <p className="text-lg text-gray max-w-[520px] mx-auto">
-            From HTML to PDF in three simple steps
+            From clone to production in three simple steps
           </p>
         </motion.div>
 
-        {/* Steps with illustrations */}
+        {/* Steps with icons */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -88,9 +87,27 @@ export function HowItWorks() {
               >
                 {/* Step card */}
                 <div className="bg-dark-lighter rounded-2xl p-6 border border-border-soft hover:border-coral/30 transition-colors">
-                  {/* Illustration */}
+                  {/* Icon */}
                   <div className="flex justify-center mb-6">
-                    <step.illustration className="w-40 h-40" />
+                    <div
+                      className={`w-24 h-24 rounded-2xl flex items-center justify-center ${
+                        step.color === "coral"
+                          ? "bg-coral/10"
+                          : step.color === "yellow"
+                            ? "bg-yellow/10"
+                            : "bg-green/10"
+                      }`}
+                    >
+                      <step.icon
+                        className={`w-12 h-12 ${
+                          step.color === "coral"
+                            ? "text-coral"
+                            : step.color === "yellow"
+                              ? "text-yellow"
+                              : "text-green"
+                        }`}
+                      />
+                    </div>
                   </div>
 
                   {/* Step number badge */}

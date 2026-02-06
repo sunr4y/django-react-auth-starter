@@ -1,0 +1,17 @@
+# Include base requirements
+-r base.txt
+
+# Testing
+pytest>=9.0
+pytest-django>=4.11
+pytest-mock>=3.15
+Faker>=40.1
+
+# Linting & Formatting
+black>=26.1
+ruff>=0.15
+
+# Type checking
+mypy>=1.19
+django-stubs>=5.2
+djangorestframework-stubs>=3.16

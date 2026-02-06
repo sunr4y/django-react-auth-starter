@@ -1,3 +1,4 @@
+import { type ReactNode } from "react"
 import { motion } from "framer-motion"
 import {
   Accordion,
@@ -6,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-const faqs = [
+const faqs: { question: string; answer: ReactNode }[] = [
   {
     question: "Is this starter free to use?",
     answer:
@@ -15,7 +16,7 @@ const faqs = [
   {
     question: "What authentication features are included?",
     answer:
-      "JWT authentication, email verification, password reset, user profiles, and API key management.",
+      "JWT authentication, email verification, password reset, and user profiles.",
   },
   {
     question: "What tech stack does this use?",
@@ -30,12 +31,24 @@ const faqs = [
   {
     question: "Is this production-ready?",
     answer:
-      "Yes! Includes 68+ tests, rate limiting, proper security headers, and follows best practices.",
+      "Yes! Includes 45+ tests, rate limiting, proper security headers, and follows best practices.",
   },
   {
     question: "How do I deploy this?",
-    answer:
-      "The backend can be deployed to any platform that supports Django (Railway, Render, etc.). The frontend can be deployed to Vercel, Netlify, or similar.",
+    answer: (
+      <>
+        The backend can be deployed to any VPS with Docker. Check out our{" "}
+        <a
+          href="https://bhusalmanish.com.np/blog/posts/deploy-drf-production.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-coral hover:underline"
+        >
+          detailed deployment guide
+        </a>
+        . The frontend can be deployed to Vercel or Netlify.
+      </>
+    ),
   },
 ]
 

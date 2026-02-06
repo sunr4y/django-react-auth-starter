@@ -8,27 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { useRegister, useResendActivation } from "@/hooks/use-auth-mutations"
 import type { ApiError } from "@/types/auth"
-
-const LANGUAGE_OPTIONS = [
-  { value: "python", label: "Python" },
-  { value: "javascript", label: "JavaScript" },
-  { value: "typescript", label: "TypeScript" },
-  { value: "php", label: "PHP" },
-  { value: "ruby", label: "Ruby" },
-  { value: "go", label: "Go" },
-  { value: "java", label: "Java" },
-  { value: "csharp", label: "C#" },
-  { value: "curl", label: "cURL" },
-]
 
 function getErrorMessage(error: ApiError): string {
   const messages: string[] = []
@@ -48,7 +29,6 @@ export function SignupPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const [preferredLanguage, setPreferredLanguage] = useState("python")
   const [agreedToTerms, setAgreedToTerms] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -91,7 +71,6 @@ export function SignupPage() {
         password,
         re_password: confirmPassword,
         full_name: fullName,
-        preferred_language: preferredLanguage,
         agreed_to_terms: agreedToTerms,
       },
       {
@@ -268,29 +247,6 @@ export function SignupPage() {
               {errors.confirmPassword || errors.re_password}
             </p>
           )}
-        </div>
-
-        {/* Preferred Language */}
-        <div className="space-y-2">
-          <Label htmlFor="language">Preferred Language</Label>
-          <Select
-            value={preferredLanguage}
-            onValueChange={setPreferredLanguage}
-          >
-            <SelectTrigger id="language">
-              <SelectValue placeholder="Select a language" />
-            </SelectTrigger>
-            <SelectContent>
-              {LANGUAGE_OPTIONS.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <p className="text-xs text-gray-dark">
-            We'll show code examples in this language
-          </p>
         </div>
 
         {/* Terms Checkbox */}

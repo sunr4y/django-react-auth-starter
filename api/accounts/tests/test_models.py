@@ -3,7 +3,7 @@
 import pytest
 from django.utils import timezone
 
-from accounts.models import APIKey, User
+from accounts.models import User
 
 
 @pytest.mark.django_db
@@ -17,13 +17,11 @@ class TestUserModel:
             username="testuser",
             password="TestPass123!",
             full_name="Test User",
-            preferred_language="python",
             agreed_to_terms=True,
         )
         assert user.email == "test@example.com"
         assert user.username == "testuser"
         assert user.full_name == "Test User"
-        assert user.preferred_language == "python"
         assert user.agreed_to_terms is True
         assert user.check_password("TestPass123!")
 
@@ -69,15 +67,6 @@ class TestUserModel:
         user.refresh_from_db()
         assert user.agreed_at == original_agreed_at
 
-    def test_default_preferred_language(self):
-        """Test default preferred language is Python."""
-        user = User.objects.create_user(
-            email="default@example.com",
-            username="defaultuser",
-            password="TestPass123!",
-        )
-        assert user.preferred_language == "python"
-
     def test_email_is_unique(self, user: User):
         """Test email must be unique."""
         from django.db import IntegrityError
@@ -88,65 +77,3 @@ class TestUserModel:
                 username="another",
                 password="TestPass123!",
             )
-
-    def test_programming_language_choices(self):
-        """Test all programming language choices are valid."""
-        valid_choices = [
-            "python",
-            "javascript",
-            "typescript",
-            "php",
-            "ruby",
-            "go",
-            "java",
-            "csharp",
-            "curl",
-        ]
-        for lang in valid_choices:
-            user = User.objects.create_user(
-                email=f"{lang}@example.com",
-                username=f"{lang}user",
-                password="TestPass123!",
-                preferred_language=lang,
-            )
-            assert user.preferred_language == lang
-
-
-@pytest.mark.django_db
-class TestAPIKeyModel:
-    """Tests for APIKey model."""
-
-    def test_create_api_key(self, user: User):
-        """Test creating an API key generates key and prefix."""
-        api_key = APIKey.objects.create(user=user, name="My API Key")
-        assert api_key.key.startswith("pk_live_")
-        assert len(api_key.key) == 56  # pk_live_ (8) + 48 hex chars
-        assert api_key.prefix == api_key.key[:12]
-
-    def test_api_key_str_representation(self, api_key: APIKey):
-        """Test API key string representation."""
-        expected = f"{api_key.name} ({api_key.prefix}...)"
-        assert str(api_key) == expected
-
-    def test_api_key_is_active_by_default(self, api_key: APIKey):
-        """Test API key is active by default."""
-        assert api_key.is_active is True
-
-    def test_api_key_unique(self, user: User):
-        """Test API keys are unique."""
-        key1 = APIKey.objects.create(user=user, name="Key 1")
-        key2 = APIKey.objects.create(user=user, name="Key 2")
-        assert key1.key != key2.key
-
-    def test_api_key_not_regenerated_on_save(self, api_key: APIKey):
-        """Test API key is not regenerated when saved again."""
-        original_key = api_key.key
-        api_key.name = "Updated Name"
-        api_key.save()
-        api_key.refresh_from_db()
-        assert api_key.key == original_key
-
-    def test_api_key_default_name(self, user: User):
-        """Test API key default name is 'Default'."""
-        api_key = APIKey.objects.create(user=user)
-        assert api_key.name == "Default"

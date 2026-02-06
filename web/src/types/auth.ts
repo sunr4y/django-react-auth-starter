@@ -2,7 +2,6 @@ export interface User {
   id: string
   email: string
   full_name: string
-  preferred_language: string
   agreed_to_terms: boolean
   agreed_at: string | null
   date_joined: string
@@ -19,7 +18,6 @@ export interface RegisterRequest {
   password: string
   re_password: string
   full_name: string
-  preferred_language: string
   agreed_to_terms: boolean
 }
 
@@ -27,7 +25,6 @@ export interface RegisterResponse {
   id: string
   email: string
   full_name: string
-  preferred_language: string
 }
 
 export interface LoginRequest {

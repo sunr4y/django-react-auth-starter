@@ -5,10 +5,7 @@ import { Button } from "@/components/ui/button"
 
 const languages = [
   { id: "python", label: "Python" },
-  { id: "nodejs", label: "NodeJS" },
-  { id: "php", label: "PHP" },
-  { id: "ruby", label: "Ruby" },
-  { id: "csharp", label: "C#" },
+  { id: "javascript", label: "JavaScript" },
   { id: "curl", label: "cURL" },
 ] as const
 
@@ -17,80 +14,64 @@ type LanguageId = (typeof languages)[number]["id"]
 const codeSnippets: Record<LanguageId, string> = {
   python: `import requests
 
+# Login and get JWT tokens
 response = requests.post(
-    'https://api.example.com/v1/pdf',
-    headers={'X-API-Key': 'pk_live_xxxxxxxxxx'},
-    json={"html": "<h1>Hello World</h1>"}
+    'http://localhost:8000/api/v1/auth/jwt/create/',
+    json={
+        "email": "user@example.com",
+        "password": "your-password"
+    }
 )
+tokens = response.json()
+# {"access": "eyJ...", "refresh": "eyJ..."}
 
-response.raise_for_status()
+# Get current user profile
+user = requests.get(
+    'http://localhost:8000/api/v1/auth/users/me/',
+    headers={'Authorization': f'Bearer {tokens["access"]}'}
+).json()
 
-with open('document.pdf', 'wb') as f:
-    f.write(response.content)`,
+print(f"Welcome, {user['full_name']}!")`,
 
-  nodejs: `const response = await fetch(
-    'https://api.example.com/v1/pdf',
+  javascript: `// Login and get JWT tokens
+const response = await fetch(
+    'http://localhost:8000/api/v1/auth/jwt/create/',
     {
         method: 'POST',
-        headers: {
-            'X-API-Key': 'pk_live_xxxxxxxxxx',
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            html: '<h1>Hello World</h1>'
-        }),
+            email: 'user@example.com',
+            password: 'your-password'
+        })
     }
 );
+const tokens = await response.json();
+// { access: "eyJ...", refresh: "eyJ..." }
 
-const pdf = await response.arrayBuffer();
-fs.writeFileSync('document.pdf', Buffer.from(pdf));`,
+// Get current user profile
+const user = await fetch(
+    'http://localhost:8000/api/v1/auth/users/me/',
+    {
+        headers: {
+            'Authorization': \`Bearer \${tokens.access}\`
+        }
+    }
+).then(res => res.json());
 
-  php: `$response = Http::withHeaders([
-    'X-API-Key' => 'pk_live_xxxxxxxxxx',
-])->post('https://api.example.com/v1/pdf', [
-    'html' => '<h1>Hello World</h1>',
-]);
+console.log(\`Welcome, \${user.full_name}!\`);`,
 
-file_put_contents(
-    'document.pdf',
-    $response->body()
-);`,
-
-  ruby: `response = HTTParty.post(
-    'https://api.example.com/v1/pdf',
-    headers: {
-        'X-API-Key' => 'pk_live_xxxxxxxxxx'
-    },
-    body: {
-        html: '<h1>Hello World</h1>'
-    }.to_json,
-    format: :plain
-)
-
-File.open('document.pdf', 'wb') do |f|
-    f.write(response.body)
-end`,
-
-  csharp: `using var client = new HttpClient();
-
-client.DefaultRequestHeaders.Add(
-    "X-API-Key",
-    "pk_live_xxxxxxxxxx"
-);
-
-var response = await client.PostAsJsonAsync(
-    "https://api.example.com/v1/pdf",
-    new { html = "<h1>Hello World</h1>" }
-);
-
-var pdf = await response.Content.ReadAsByteArrayAsync();
-File.WriteAllBytes("document.pdf", pdf);`,
-
-  curl: `curl -X POST https://api.example.com/v1/pdf \\
-    -H "X-API-Key: pk_live_xxxxxxxxxx" \\
+  curl: `# Login and get JWT tokens
+curl -X POST http://localhost:8000/api/v1/auth/jwt/create/ \\
     -H "Content-Type: application/json" \\
-    -d '{"html": "<h1>Hello World</h1>"}' \\
-    -o document.pdf`,
+    -d '{"email": "user@example.com", "password": "your-password"}'
+
+# Response: {"access": "eyJ...", "refresh": "eyJ..."}
+
+# Get current user profile
+curl http://localhost:8000/api/v1/auth/users/me/ \\
+    -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+
+# Response: {"id": "...", "email": "...", "full_name": "..."}`,
 }
 
 export function CodeSnippet() {
@@ -282,6 +263,7 @@ function SyntaxHighlight({ code }: { code: string }) {
       "as",
       "def",
       "class",
+      "print",
     ]
     const keywordPattern = new RegExp(`\\b(${keywordList.join("|")})\\b`, "g")
     const parts = text.split(keywordPattern)

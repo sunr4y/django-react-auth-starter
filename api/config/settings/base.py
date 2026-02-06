@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # Third party
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
     "djoser",
     "drf_spectacular",
@@ -113,6 +114,7 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "anon": "100/hour",
         "user": "1000/hour",
+        "auth": "5/minute",
     },
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
@@ -122,6 +124,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
 
 # Token expiration for activation and password reset emails (30 minutes)
@@ -184,7 +187,6 @@ SPECTACULAR_SETTINGS = {
     },
     "SECURITY": [
         {"jwtAuth": []},
-        {"apiKeyAuth": []},
     ],
     "APPEND_COMPONENTS": {
         "securitySchemes": {
@@ -192,11 +194,6 @@ SPECTACULAR_SETTINGS = {
                 "type": "http",
                 "scheme": "bearer",
                 "bearerFormat": "JWT",
-            },
-            "apiKeyAuth": {
-                "type": "apiKey",
-                "in": "header",
-                "name": "X-API-Key",
             },
         }
     },

@@ -1,43 +1,42 @@
 import { motion } from "framer-motion"
-import {
-  InvoiceIllustration,
-  ReportsIllustration,
-  CertificateIllustration,
-  ContractIllustration,
-} from "@/components/illustrations"
+import { Layers, Terminal, Building2, Lightbulb } from "lucide-react"
 
 const useCases = [
   {
-    illustration: InvoiceIllustration,
-    title: "Invoice Generation",
+    icon: Layers,
+    color: "coral",
+    title: "SaaS Applications",
     description:
-      "Automatically generate professional invoices from your billing system. Perfect for e-commerce and SaaS platforms that need reliable, pixel-perfect PDF invoices.",
+      "Launch your SaaS faster with complete user management, subscription-ready architecture, and secure JWT authentication.",
     features: [
-      "Custom templates",
-      "Dynamic data binding",
-      "Multi-currency support",
+      "User registration & login",
+      "Email verification",
+      "Profile & settings",
     ],
   },
   {
-    illustration: ReportsIllustration,
-    title: "Reports & Analytics",
+    icon: Terminal,
+    color: "yellow",
+    title: "Developer Tools",
     description:
-      "Export dashboards and charts to PDF. Render JavaScript-based visualizations from Chart.js, D3, or Plotly with full fidelity.",
-    features: ["Chart rendering", "Dashboard exports", "Scheduled reports"],
+      "Build CLI tools, APIs, and integrations with built-in JWT authentication and rate limiting. Perfect for developer-focused products.",
+    features: ["JWT authentication", "Rate limiting", "Token management"],
   },
   {
-    illustration: CertificateIllustration,
-    title: "Certificates",
+    icon: Building2,
+    color: "blue",
+    title: "Internal Tools",
     description:
-      "Issue personalized course completion certificates, awards, and credentials. Support for custom fonts, designs, and batch generation.",
-    features: ["Custom fonts", "Batch generation", "QR verification"],
+      "Spin up secure internal dashboards and admin panels quickly. Production-ready security without the setup headache.",
+    features: ["Secure by default", "User management", "Audit-ready"],
   },
   {
-    illustration: ContractIllustration,
-    title: "Contracts & Legal Docs",
+    icon: Lightbulb,
+    color: "green",
+    title: "Side Projects",
     description:
-      "Generate contracts, agreements, and offer letters dynamically from templates. Perfect for HR, legal, and sales teams.",
-    features: ["Template engine", "E-signature ready", "Version control"],
+      "Stop rebuilding authentication for every project. Clone once, customize, and focus on what makes your app unique.",
+    features: ["Quick setup", "Fully customizable", "No vendor lock-in"],
   },
 ]
 
@@ -60,7 +59,6 @@ const itemVariants = {
   },
 }
 
-// Text content animation variants
 const textContainerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -115,8 +113,8 @@ export function UseCases() {
             Built for real-world use cases
           </h2>
           <p className="text-lg text-text-secondary max-w-[560px] mx-auto">
-            Trusted by developers building invoices, reports, certificates, and
-            more
+            Whether you're building a SaaS, internal tool, or side project,
+            AuthKit has you covered
           </p>
         </motion.div>
 
@@ -136,7 +134,7 @@ export function UseCases() {
                 index % 2 === 1 ? "lg:flex-row-reverse lg:gap-12" : "lg:gap-20"
               }`}
             >
-              {/* Illustration */}
+              {/* Icon Illustration */}
               <motion.div
                 className="flex-1 w-full flex items-center justify-center"
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -144,7 +142,30 @@ export function UseCases() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <useCase.illustration className="w-full h-auto max-w-[450px]" />
+                <div
+                  className={`w-64 h-64 rounded-3xl flex items-center justify-center ${
+                    useCase.color === "coral"
+                      ? "bg-coral/10"
+                      : useCase.color === "yellow"
+                        ? "bg-yellow/10"
+                        : useCase.color === "blue"
+                          ? "bg-blue-500/10"
+                          : "bg-green/10"
+                  }`}
+                >
+                  <useCase.icon
+                    className={`w-32 h-32 ${
+                      useCase.color === "coral"
+                        ? "text-coral"
+                        : useCase.color === "yellow"
+                          ? "text-yellow"
+                          : useCase.color === "blue"
+                            ? "text-blue-500"
+                            : "text-green"
+                    }`}
+                    strokeWidth={1}
+                  />
+                </div>
               </motion.div>
 
               {/* Content */}

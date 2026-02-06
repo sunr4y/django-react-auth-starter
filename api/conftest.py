@@ -3,7 +3,7 @@
 import pytest
 from rest_framework.test import APIClient
 
-from accounts.models import APIKey, User
+from accounts.models import User
 
 
 @pytest.fixture
@@ -21,7 +21,6 @@ def user_data() -> dict:
         "password": "SecurePass123!",
         "re_password": "SecurePass123!",
         "full_name": "Test User",
-        "preferred_language": "python",
         "agreed_to_terms": True,
     }
 
@@ -34,7 +33,6 @@ def user(db) -> User:
         username="testuser",
         password="TestPass123!",
         full_name="Test User",
-        preferred_language="python",
         agreed_to_terms=True,
         is_active=True,
     )
@@ -48,7 +46,6 @@ def inactive_user(db) -> User:
         username="inactiveuser",
         password="TestPass123!",
         full_name="Inactive User",
-        preferred_language="python",
         agreed_to_terms=True,
         is_active=False,
     )
@@ -59,9 +56,3 @@ def authenticated_client(api_client: APIClient, user: User) -> APIClient:
     """Return an authenticated API client."""
     api_client.force_authenticate(user=user)
     return api_client
-
-
-@pytest.fixture
-def api_key(user: User) -> APIKey:
-    """Create and return an API key for the test user."""
-    return APIKey.objects.create(user=user, name="Test Key")

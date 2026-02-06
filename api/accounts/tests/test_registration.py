@@ -23,7 +23,6 @@ class TestUserRegistration:
         # Verify user was created in database
         user = User.objects.get(email=user_data["email"])
         assert user.full_name == user_data["full_name"]
-        assert user.preferred_language == user_data["preferred_language"]
         assert user.agreed_to_terms is True
 
     def test_register_without_email(self, api_client: APIClient, user_data: dict):
@@ -97,31 +96,6 @@ class TestUserRegistration:
         response = api_client.post(self.url, user_data, format="json")
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "username" in response.data
-
-    def test_register_with_valid_preferred_language(
-        self, api_client: APIClient, user_data: dict
-    ):
-        """Test registration with different valid programming languages."""
-        languages = ["javascript", "typescript", "go", "java", "csharp", "curl"]
-        for i, lang in enumerate(languages):
-            user_data["email"] = f"user{i}@example.com"
-            user_data["username"] = f"user{i}"
-            user_data["preferred_language"] = lang
-            response = api_client.post(self.url, user_data, format="json")
-            assert response.status_code == status.HTTP_201_CREATED
-
-            # Verify in database
-            user = User.objects.get(email=user_data["email"])
-            assert user.preferred_language == lang
-
-    def test_register_with_invalid_preferred_language(
-        self, api_client: APIClient, user_data: dict
-    ):
-        """Test registration fails with invalid programming language."""
-        user_data["preferred_language"] = "invalid_language"
-        response = api_client.post(self.url, user_data, format="json")
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "preferred_language" in response.data
 
     def test_full_name_is_trimmed(self, api_client: APIClient, user_data: dict):
         """Test full name is trimmed of leading/trailing whitespace."""
