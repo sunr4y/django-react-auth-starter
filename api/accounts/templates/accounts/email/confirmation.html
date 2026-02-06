@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block text_body %}
-{% blocktrans %}Hi {{ user.full_name|default:user.email }},{% endblocktrans %}
+{% blocktrans %}Hi {{ user_display_name }},{% endblocktrans %}
 
 {% blocktrans %}Your {{ site_name }} account has been activated successfully!{% endblocktrans %}
 
@@ -31,7 +31,7 @@
         <h1 style="color: #f05335; margin: 0;">{{ site_name }}</h1>
     </div>
 
-    <p>{% blocktrans %}Hi {{ user.full_name|default:user.email }},{% endblocktrans %}</p>
+    <p>{% blocktrans %}Hi {{ user_display_name }},{% endblocktrans %}</p>
 
     <p>{% blocktrans %}Your {{ site_name }} account has been activated successfully!{% endblocktrans %}</p>
 
