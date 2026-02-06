@@ -15,6 +15,10 @@ A production-ready authentication starter with Django REST Framework and React. 
 
   <img width="1822" height="887" alt="loggedin-ui-dashboard" src="https://github.com/user-attachments/assets/aa5057a3-e0b6-469a-ac52-3d7ef70736c5" />
 
+  <br>
+  <img width="1690" height="907" alt="swagger-django-react" src="https://github.com/user-attachments/assets/00106e8d-fcd3-45d6-962f-ab6f3c0393e8" />
+
+
 ## Features
 
 - JWT authentication with automatic token refresh & rotation
