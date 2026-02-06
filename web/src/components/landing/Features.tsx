@@ -33,9 +33,9 @@ const features = [
   },
   {
     icon: UserCircle,
-    title: "User Profiles",
+    title: "User Registration",
     description:
-      "Complete user management with custom fields, profile updates, and account settings.",
+      "Full registration flow with email activation, password reset, and secure account creation.",
     accent: "green",
   },
   {
