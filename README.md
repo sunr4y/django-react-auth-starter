@@ -6,13 +6,14 @@ A production-ready authentication starter with Django REST Framework and React. 
 
 ## Screenshots
 
-![Landing Page](https://placeholder.com/landing-page.png)
+  <img width="1752" height="926" alt="landing-page-django-starter" src="https://github.com/user-attachments/assets/0eb21f87-971e-4a3e-b9d0-68c639d81de7" />                                                                                                                                                                                                                                                                                                                           
+  <br>
 
-![Login](https://placeholder.com/login.png)
+  <img width="1653" height="921" alt="signup-page-auth-starter" src="https://github.com/user-attachments/assets/9f9b6eb2-f9d2-47fb-8dd7-a17c1697fc76" />
 
-![Sign Up](https://placeholder.com/signup.png)
+  <br>
 
-![Dashboard](https://placeholder.com/dashboard.png)
+  <img width="1822" height="887" alt="loggedin-ui-dashboard" src="https://github.com/user-attachments/assets/aa5057a3-e0b6-469a-ac52-3d7ef70736c5" />
 
 ## Features
 
