@@ -4,6 +4,16 @@ A production-ready authentication starter with Django REST Framework and React. 
 
 **Full Tutorial:** [Read the blog post](https://www.bhusalmanish.com.np/blog/posts/django-react-auth-starter.html)
 
+## Screenshots
+
+![Landing Page](https://placeholder.com/landing-page.png)
+
+![Login](https://placeholder.com/login.png)
+
+![Sign Up](https://placeholder.com/signup.png)
+
+![Dashboard](https://placeholder.com/dashboard.png)
+
 ## Features
 
 - JWT authentication with automatic token refresh & rotation
