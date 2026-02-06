@@ -103,6 +103,10 @@ cd api
 pytest
 ```
 
+## Deployment
+
+For a complete production deployment guide with Docker, Nginx, and free SSL, check out: [Deploy Django REST Framework to Production](https://www.bhusalmanish.com.np/blog/posts/deploy-drf-production.html)
+
 ## License
 
 MIT
