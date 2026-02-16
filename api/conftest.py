@@ -5,6 +5,8 @@ from rest_framework.test import APIClient
 
 from accounts.models import User
 
+USER_PASSWORD = "TestPass123!"
+
 
 @pytest.fixture
 def api_client() -> APIClient:
@@ -31,7 +33,7 @@ def user(db) -> User:
     return User.objects.create_user(
         email="user@example.com",
         username="testuser",
-        password="TestPass123!",
+        password=USER_PASSWORD,
         full_name="Test User",
         agreed_to_terms=True,
         is_active=True,
@@ -44,7 +46,7 @@ def inactive_user(db) -> User:
     return User.objects.create_user(
         email="inactive@example.com",
         username="inactiveuser",
-        password="TestPass123!",
+        password=USER_PASSWORD,
         full_name="Inactive User",
         agreed_to_terms=True,
         is_active=False,
